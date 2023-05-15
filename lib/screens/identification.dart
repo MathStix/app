@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget{
-  const HomeScreen({super.key});
+class Identification extends StatelessWidget{
+  const Identification({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,6 @@ class HomeScreen extends StatelessWidget{
       ),
       body: const Center(
         child: Text('Welcome to my app'),
-
       ),
     );
   }
