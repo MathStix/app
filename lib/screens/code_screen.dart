@@ -24,12 +24,9 @@ class _CodeScreenState extends State<CodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientBackground( // Plaats de GradientBackground-widget als de bovenste widget
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Code Page'),
-        ),
-        body: Container(
+    return Scaffold(
+      body: GradientBackground( // Plaats de GradientBackground-widget als de bovenste widget
+        child: Container(
           padding: EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
