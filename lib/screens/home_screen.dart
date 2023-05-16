@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import '../widgets/background.dart';
 
-class HomeScreen extends StatelessWidget{
-  const HomeScreen({super.key});
+void main() {
+  runApp(HomeScreen());
+}
 
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My App'),
-      ),
-      body: const Center(
-        child: Text('Welcome to my app'),
-
+    return MaterialApp(
+      home: Scaffold(
+        body: GradientBackground( // Gebruik de GradientBackground widget als achtergrond
+          child: Center(
+            child: Text(
+              'Andere pagina',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
