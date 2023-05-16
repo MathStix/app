@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nieuw/screens/home_screen.dart';
-import 'package:nieuw/screens/code_screen.dart';
+import 'package:nieuw/screens/identification_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
     
     Future.delayed(Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => CodeScreen(),
+          builder: (_) => IdentificationScreen(),
         ),
       );
     });
