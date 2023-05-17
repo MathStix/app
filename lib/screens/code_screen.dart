@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nieuw/screens/home_screen.dart';
+import 'package:nieuw/screens/ability_screen.dart';
 import 'package:nieuw/widgets/background.dart'; // Importeer de GradientBackground-widget
-
 import '../utils/screen_pusher.dart';
-import 'ability_screen.dart';
 
 class CodeScreen extends StatefulWidget {
   @override

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(AbilityScreen());
-}
+import 'package:nieuw/screens/overview_screen.dart';
 
 class AbilityScreen extends StatelessWidget {
   @override
@@ -85,6 +82,10 @@ class CustomButton extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => OverviewScreen()),
+          );
         },
         child: Text(
           text,
