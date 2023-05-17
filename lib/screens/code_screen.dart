@@ -3,6 +3,7 @@ import 'package:nieuw/screens/home_screen.dart';
 import 'package:nieuw/widgets/background.dart'; // Importeer de GradientBackground-widget
 
 import '../utils/screen_pusher.dart';
+import 'ability_screen.dart';
 
 class CodeScreen extends StatefulWidget {
   @override
@@ -101,7 +102,7 @@ class _CodeScreenState extends State<CodeScreen> {
                   }
 
                   if (code == 'abcd') {
-                    ScreenPusher.pushScreen(context, HomeScreen(), true);
+                    ScreenPusher.pushScreen(context, AbilityScreen(), true);
                   } else {
                     setState(() {
                       _errorMessage = 'Foute code. Probeer het opnieuw.';

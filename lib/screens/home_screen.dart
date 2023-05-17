@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/background.dart';
+import '../widgets/button.dart';
 
 
 void main() {
@@ -11,16 +12,25 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: GradientBackground( // Gebruik de GradientBackground widget als achtergrond
-          child: Center(
-            child: Text(
-              'Andere pagina',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
+        body: Stack(
+          children: [
+            GradientBackground(
+              child: const Center(
+                child: Text(
+                  'Andere pagina',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
               ),
             ),
-          ),
+            Positioned(
+              top: 20,
+              right: 20,
+              child: CustomButton(),
+            ),
+          ],
         ),
       ),
     );
