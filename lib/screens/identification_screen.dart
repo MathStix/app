@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nieuw/screens/ability_screen.dart';
 import 'package:nieuw/screens/code_screen.dart';
-
 import '../utils/screen_pusher.dart';
 
 class IdentificationScreen extends StatelessWidget {
@@ -32,10 +31,10 @@ class IdentificationScreen extends StatelessWidget {
         body: Container(
           decoration: const BoxDecoration(
               gradient: LinearGradient(
-            colors: [Color(0xff17174E), Color(0xffB24C5D)],
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-          )),
+                colors: [Color(0xff17174E), Color(0xffB24C5D)],
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+              )),
           child: Padding(
             padding: EdgeInsets.all(16.0),
             child: Column(
@@ -80,7 +79,24 @@ class IdentificationScreen extends StatelessWidget {
                 SizedBox(height: 256.0),
                 ElevatedButton(
                   onPressed: () {
-                    ScreenPusher.pushScreen(context, CodeScreen(), true);
+                    String name = nameController.text.trim();
+                    if (_isValidName(name)) {
+                      ScreenPusher.pushScreen(context, CodeScreen(), true);
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Ongeldige naam'),
+                          content: Text('Je naam mag alleen letters bevatten.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
                   child: Text(
                     'Verder',
@@ -94,7 +110,7 @@ class IdentificationScreen extends StatelessWidget {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
-                            21.0), // Adjust the border radius as needed
+                            21.0), // Pas de border radius aan indien nodig
                       ),
                     ),
                   ),
@@ -105,5 +121,10 @@ class IdentificationScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool _isValidName(String name) {
+    final RegExp nameRegex = RegExp(r'^[a-zA-Z]+$');
+    return nameRegex.hasMatch(name);
   }
 }
