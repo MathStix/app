@@ -60,30 +60,43 @@ class OverviewScreen extends StatelessWidget {
               'Met jou aan het wachten:',
               style: TextStyle(fontSize: 12, color: Colors.white),
             ),
+            SizedBox(height: 24),
+            GridView.count(
+              shrinkWrap: true,
+              crossAxisCount: 3,
+              mainAxisSpacing: 22.0,
+              crossAxisSpacing: 22.0,
+              children: [
+                CustomFigure(),
+                CustomFigure(),
+                CustomFigure(),
+                CustomFigure(),
+                CustomFigure(),
+                CustomFigure(),
+              ],
+            ),
             SizedBox(height: 36),
             Center(
-              child: ElevatedButton.icon(
-                onPressed: () {
-                },
-                icon: Icon(
-                  Icons.refresh,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  '',
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(60, 60),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  primary: Color(0xFFFA6666),
-                ),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CustomFigure extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
       ),
     );
   }
