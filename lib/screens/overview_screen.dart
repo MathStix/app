@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:nieuw/screens/maps_screen.dart';
 
 class OverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MapsScreen()),
+      );
+    });
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -16,7 +25,7 @@ class OverviewScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 22),
+            SizedBox(height: 40),
             Center(
               child: Text(
                 'Even geduld...',
@@ -64,8 +73,8 @@ class OverviewScreen extends StatelessWidget {
             GridView.count(
               shrinkWrap: true,
               crossAxisCount: 3,
-              mainAxisSpacing: 22.0,
-              crossAxisSpacing: 22.0,
+              mainAxisSpacing: 10.0,
+              crossAxisSpacing: 10.0,
               children: [
                 CustomFigure(),
                 CustomFigure(),
@@ -91,13 +100,22 @@ class OverviewScreen extends StatelessWidget {
 class CustomFigure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 100,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
+    return Column(
+      children: [
+        Container(
+          width: 120,
+          height: 120,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        SizedBox(height: 8),
+        Text(
+          'Naam',
+          style: TextStyle(fontSize: 15, color: Colors.white),
+        ),
+      ],
     );
   }
 }
