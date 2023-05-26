@@ -1,8 +1,7 @@
 import 'dart:typed_data';
-
-import 'package:color_parser/color_parser.dart';
 import 'package:finger_painter/finger_painter.dart';
 import 'package:flutter/material.dart';
+import 'package:nieuw/screens/answerquestion_screen.dart';
 import 'package:nieuw/utils/color.dart';
 import 'package:nieuw/widgets/background.dart';
 
@@ -59,7 +58,10 @@ class _WhiteBoardScreenState extends State<WhiteBoardScreen> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          print('back');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AnswerScreen()),
+                          );
                         },
                         icon: const Icon(
                           Icons.arrow_back_ios,

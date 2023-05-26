@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nieuw/screens/answerquestion_screen.dart';
 import 'package:nieuw/screens/home_screen.dart';
 import 'package:nieuw/screens/identification_screen.dart';
+import 'package:nieuw/screens/maps_screen.dart';
 import 'package:nieuw/screens/question_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
     
     Future.delayed(Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => QuestionScreen(),
+          builder: (_) => IdentificationScreen(),
         ),
       );
     });

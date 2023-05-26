@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nieuw/screens/answerquestion_screen.dart';
-import 'package:nieuw/screens/frozen_screen.dart';
+import 'package:nieuw/screens/white_board_screen.dart';
 
-class MapsScreen extends StatelessWidget {
+class AnswerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AnswerScreen()),
-      );
-    });
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -29,14 +22,14 @@ class MapsScreen extends StatelessWidget {
             SizedBox(height: 30),
             Center(
               child: Text(
-                'Onderweg naar vraag x',
+                'Vraag x',
                 style: TextStyle(fontSize: 30, color: Colors.white),
               ),
             ),
             SizedBox(height: 8),
             Center(
               child: Text(
-                'Nog x meter te gaan',
+                'Zoek drie vormen van lijnsymmetrie',
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
@@ -55,21 +48,52 @@ class MapsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
-                Container(
-                  height: 300, // Set the desired height
-                  width: double.infinity, // Set the desired width
-                  child: GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(37.42796133580664, -122.085749655962),
-                      zoom: 14,
-                    ),
-                  ),
+                SizedBox(height: 60),
+                CustomButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WhiteBoardScreen()),
+                    );
+                  },
+                  text: 'Neem foto 1',
+                ),
+                SizedBox(height: 8),
+                CustomButton(
+                  onPressed: () {},
+                  text: 'Neem foto 1',
+                ),
+                SizedBox(height: 8),
+                CustomButton(
+                  onPressed: () {},
+                  text: 'Neem foto 1',
                 ),
               ],
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+
+  const CustomButton({required this.text, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: Text(text),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        primary: Color(0xFFFA6666),
+        minimumSize: Size(double.infinity, 100), // Set the desired button height
       ),
     );
   }
