@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:nieuw/main.dart';
+import 'package:confetti/confetti.dart';
+
+import '../utils/screen_pusher.dart';
 import '../widgets/background.dart';
+import 'ability_screen.dart';
 
 class QuestionScreen extends StatefulWidget {
   @override
@@ -15,22 +17,29 @@ class _QuestionScreenState extends State<QuestionScreen> {
   late Timer timer;
   String formattedTime = '00:00';
   List<String> code = List.generate(6, (_) => '');
-  List<FocusNode> focusNodes = List.generate(6, (_) => FocusNode());
+  final List<TextEditingController> _codeControllers =
+      List.generate(6, (_) => TextEditingController());
+  final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+  String _errorMessage = '';
+  final controller = ConfettiController();
+  bool isPlaying = false;
 
   @override
   void initState() {
     super.initState();
     startTime = DateTime.now();
     startTimer();
-    focusNodes[0].requestFocus();
+    controller.addListener(() {
+      print("new event");
+      isPlaying = controller.state == ConfettiControllerState.playing;
+      print("isplaying : $isPlaying");
+    });
   }
 
   @override
   void dispose() {
     timer.cancel();
-    for (var node in focusNodes) {
-      node.dispose();
-    }
+    controller.dispose();
     super.dispose();
   }
 
@@ -54,154 +63,142 @@ class _QuestionScreenState extends State<QuestionScreen> {
     return '$minutes:$seconds';
   }
 
-  void handleKeyPress(RawKeyEvent event, int index) {
-    if (event is RawKeyDownEvent) {
-      if (event.logicalKey == LogicalKeyboardKey.backspace) {
-        if (index > 0) {
-          setState(() {
-            focusNodes[index - 1].requestFocus();
-            code[index - 1] = '';
-          });
-        }
-      } else if (event.logicalKey == LogicalKeyboardKey.enter ||
-          event.logicalKey == LogicalKeyboardKey.space) {
-        if (index < 5) {
-          setState(() {
-            focusNodes[index + 1].requestFocus();
-          });
-        }
-      } else {
-        String keyPressed = event.character?.toUpperCase() ?? '';
-        if (keyPressed.isNotEmpty) {
-          setState(() {
-            code[index] = keyPressed;
-          });
-          if (index < 5) {
-            setState(() {
-              focusNodes[index + 1].requestFocus();
-            });
-          }
-        }
-      }
-    }
-  }
-
-  bool isCodeCorrect() {
-    String enteredCode = code.join('');
-    String hardcodedCode = 'ABCDEF'; // Hardcoded code
-    return enteredCode.toLowerCase() == hardcodedCode.toLowerCase();
-  }
-
-  void submitCode() {
-    if (isCodeCorrect()) {
-      // Code is correct, perform desired action
-      print('Code is correct');
-    } else {
-      // Code is incorrect, display error message
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Foutieve code'),
-            content: Text('De ingevoerde code is incorrect. Probeer het opnieuw.'),
-            actions: [
-              TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: GradientBackground(
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.only(top: 42),
-                alignment: Alignment.center,
-                child: Text(
-                  'Kies een vraag',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+    return Scaffold(
+      body: Stack(
+        children: [
+          GradientBackground(
+            child: Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Voer de 6-letterige code in:',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(6, (index) {
-                  return SizedBox(
-                    width: 40,
-                    child: RawKeyboardListener(
-                      focusNode: focusNodes[index],
-                      onKey: (event) => handleKeyPress(event, index),
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                        ),
-                        child: Text(
-                          code[index],
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
+                  SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      for (int i = 0; i < 6; i++)
+                        Container(
+                          alignment: Alignment.center,
+                          width: 50.0,
+                          child: TextField(
+                            controller: _codeControllers[i],
+                            focusNode: _focusNodes[i],
+                            maxLength: 1,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                _errorMessage = '';
+                              });
+                              if (value.isNotEmpty && i < 5) {
+                                _focusNodes[i + 1].requestFocus();
+                              }
+                              if (value.isEmpty && i > 0) {
+                                _focusNodes[i - 1].requestFocus();
+                              }
+                            },
+                            onSubmitted: (value) {
+                              if (value.isEmpty && i > 0) {
+                                _focusNodes[i - 1].requestFocus();
+                              }
+                            },
                           ),
                         ),
-                      ),
-                    ),
-                  );
-                }),
-              ),
-              SizedBox(height: 20),
-              Align(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  onPressed: submitCode,
-                  child: Text('Selecteer Code'),
-                ),
-              ),
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 42),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Huidige tijd:',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        formattedTime,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
                     ],
                   ),
-                ),
+                  SizedBox(height: 10.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      String code = '';
+                      for (int i = 0; i < 6; i++) {
+                        code += _codeControllers[i].text.toLowerCase();
+                      }
+
+                      if (code == 'abcdef') {
+                        // ScreenPusher.pushScreen(context, AbilityScreen(), true);
+                        if (isPlaying) {
+                          controller.stop();
+                        } else {
+                          setState(() {
+                            controller.play();
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          _errorMessage = 'Foute code. Probeer het opnieuw.';
+                        });
+                      }
+                    },
+                    child: Text(
+                      'Doorgaan',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Text(
+                    _errorMessage,
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Text(
+                    'Tijd op pagina: $formattedTime',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+          Center(
+            child: ConfettiWidget(
+              confettiController: controller,
+              shouldLoop: true,
+              numberOfParticles: 100,
+              blastDirection: -pi / 2,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class OtherPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Other Page'),
+      ),
+      body: Center(
+        child: Text('You have entered the correct code!'),
       ),
     );
   }
