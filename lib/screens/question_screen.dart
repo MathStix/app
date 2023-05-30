@@ -75,10 +75,25 @@ class _QuestionScreenState extends State<QuestionScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Center(
+                    child: Text(
+                      'Kies een vraag',
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white
+
+                      )
+                    ),
+                  ),
                   Text(
                     'Voer de 6-letterige code in:',
                     style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -126,26 +141,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   SizedBox(height: 10.0),
                   ElevatedButton(
                     onPressed: () {
-                      String code = '';
-                      for (int i = 0; i < 6; i++) {
-                        code += _codeControllers[i].text.toLowerCase();
-                      }
-
-                      if (code == 'abcdef') {
-                        // ScreenPusher.pushScreen(context, AbilityScreen(), true);
-                        if (isPlaying) {
-                          controller.stop();
-                        } else {
-                          setState(() {
-                            controller.play();
-                          });
-                        }
-                      } else {
-                        setState(() {
-                          _errorMessage = 'Foute code. Probeer het opnieuw.';
-                        });
-                      }
+                      // De code die wordt uitgevoerd wanneer de knop wordt ingedrukt
                     },
+
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFFA6666)), // Pas hier de gewenste kleur aan
+                    ),
                     child: Text(
                       'Doorgaan',
                       style: TextStyle(
@@ -164,6 +165,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     ),
                   ),
                   SizedBox(height: 10.0),
+                  CustomButton(text: 'Vraag 1',),
+                  CustomButton(text: 'Vraag 2',),
+                  CustomButton(text: 'Vraag 3',),
+                  CustomButton(text: 'Vraag 4',),
                   Text(
                     'Tijd op pagina: $formattedTime',
                     style: TextStyle(
