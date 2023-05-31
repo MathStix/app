@@ -9,20 +9,25 @@ class FrozenScreen extends StatefulWidget {
   _FrozenScreenState createState() => _FrozenScreenState();
 }
 
-class _FrozenScreenState extends State<FrozenScreen> {
-  int countdownDuration = 120; // 2 minutes in seconds
+class _FrozenScreenState extends State<FrozenScreen>
+    with SingleTickerProviderStateMixin {
+  int countdownDuration = 7;
   Timer? countdownTimer;
   String countdownText = '02:00';
+  late AnimationController rotationController;
+  late Animation<double> rotationAnimation;
 
   @override
   void initState() {
     super.initState();
     startCountdown();
+    initializeRotationAnimation();
   }
 
   @override
   void dispose() {
     countdownTimer?.cancel();
+    rotationController.dispose();
     super.dispose();
   }
 
@@ -44,11 +49,28 @@ class _FrozenScreenState extends State<FrozenScreen> {
     });
   }
 
+  void initializeRotationAnimation() {
+    rotationController = AnimationController(
+      duration: Duration(seconds: countdownDuration * 12),
+      vsync: this,
+    );
+
+    rotationAnimation = Tween<double>(begin: 0.0, end: 360.0).animate(
+      CurvedAnimation(
+        parent: rotationController,
+        curve: Curves.linear,
+      ),
+    );
+
+    rotationController.repeat();
+  }
+
   String formatCountdownTime(int duration) {
     int minutes = duration ~/ 60;
     int seconds = duration % 60;
     String formattedTime =
-        '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+        '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(
+        2, '0')}';
     return formattedTime;
   }
 
@@ -76,10 +98,13 @@ class _FrozenScreenState extends State<FrozenScreen> {
             ),
             SizedBox(height: 180),
             Center(
-              child: Image.asset(
-                'assets/mdi_snowflake.png',
-                width: 200,
-                height: 200,
+              child: RotationTransition(
+                turns: rotationAnimation,
+                child: Image.asset(
+                  'assets/mdi_snowflake.png',
+                  width: 200,
+                  height: 200,
+                ),
               ),
             ),
             SizedBox(height: 22),

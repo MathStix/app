@@ -10,7 +10,7 @@ class MapsScreen extends StatelessWidget {
     Future.delayed(Duration(seconds: 2), () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => AnswerScreen()),
+        MaterialPageRoute(builder: (context) => FrozenScreen()),
       );
     });
     return Scaffold(

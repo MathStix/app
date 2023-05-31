@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nieuw/screens/maps_screen.dart';
+import 'package:nieuw/screens/question_screen.dart';
 
 class OverviewScreen extends StatelessWidget {
   @override
@@ -8,7 +9,7 @@ class OverviewScreen extends StatelessWidget {
     Future.delayed(Duration(seconds: 2), () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MapsScreen()),
+        MaterialPageRoute(builder: (context) => QuestionScreen()),
       );
     });
 

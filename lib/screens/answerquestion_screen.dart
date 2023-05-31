@@ -61,12 +61,12 @@ class AnswerScreen extends StatelessWidget {
                 SizedBox(height: 8),
                 CustomButton(
                   onPressed: () {},
-                  text: 'Neem foto 1',
+                  text: 'Neem foto 2',
                 ),
                 SizedBox(height: 8),
                 CustomButton(
                   onPressed: () {},
-                  text: 'Neem foto 1',
+                  text: 'Neem foto 3',
                 ),
               ],
             ),

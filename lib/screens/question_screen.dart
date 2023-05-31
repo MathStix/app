@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
+import 'package:nieuw/screens/maps_screen.dart';
 
 import '../utils/screen_pusher.dart';
 import '../widgets/background.dart';
@@ -141,11 +142,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   SizedBox(height: 10.0),
                   ElevatedButton(
                     onPressed: () {
-                      // De code die wordt uitgevoerd wanneer de knop wordt ingedrukt
                     },
-
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFFA6666)), // Pas hier de gewenste kleur aan
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(40.0, 65.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      primary: Color(0xFFFA6666),
                     ),
                     child: Text(
                       'Doorgaan',
@@ -168,13 +171,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   CustomButton(text: 'Vraag 1',),
                   CustomButton(text: 'Vraag 2',),
                   CustomButton(text: 'Vraag 3',),
-                  CustomButton(text: 'Vraag 4',),
-                  Text(
-                    'Tijd op pagina: $formattedTime',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
+                  SizedBox(height: 10.0),
+                  Center(
+                    child: Text(
+                      'Tijd op pagina: $formattedTime',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -190,6 +195,38 @@ class _QuestionScreenState extends State<QuestionScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final String text;
+
+  const CustomButton({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MapsScreen()),
+          );
+        },
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 24),
+        ),
+        style: ElevatedButton.styleFrom(
+          fixedSize: Size.fromHeight(95.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+          primary: Color(0xFFFA6666),
+        ),
       ),
     );
   }
