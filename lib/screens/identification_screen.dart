@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nieuw/repositories/shared_preferences_repository.dart';
 import 'package:nieuw/screens/ability_screen.dart';
 import 'package:nieuw/screens/code_screen.dart';
 import '../utils/screen_pusher.dart';
@@ -81,6 +82,8 @@ class IdentificationScreen extends StatelessWidget {
                   onPressed: () {
                     String name = nameController.text.trim();
                     if (_isValidName(name)) {
+                      SharedPreferencesRepository.updateProfile();
+                      SharedPreferencesRepository.name = name;
                       ScreenPusher.pushScreen(context, CodeScreen(), true);
                     } else {
                       showDialog(
