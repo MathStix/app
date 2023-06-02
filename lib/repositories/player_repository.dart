@@ -8,6 +8,8 @@ class PlayerRepository {
   static Uri playerUri = Uri.parse('${GeneralRepository.baseUrl}/player');
 
   static Future<void> updateProfile(String deviceId, String name) async {
+    print("Profiel updaten");
+
     await http.post(
       playerUri,
       headers: <String, String>{
@@ -18,7 +20,7 @@ class PlayerRepository {
         'name': name,
       }),
     );
-    print("Profiel updaten");
+    print("Profiel updaten 2");
     return;
   }
 }

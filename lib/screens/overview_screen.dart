@@ -18,11 +18,15 @@ class _OverviewScreenState extends State<OverviewScreen> {
     super.initState();
     // We asume the websocket connection is OK
     WebsocketRepository.stream.listen((event) {
-      var json = jsonDecode(event);
-      if (json['message'] == 'startGame') {
-        print("Started game!");
+      Map<String, dynamic> json = jsonDecode(event);
+
+      if (json['message'] == "startGame") {
+        // TODO: Navigate to question screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => QuestionScreen()),
+        );
       }
-      print(json);
     });
   }
 
