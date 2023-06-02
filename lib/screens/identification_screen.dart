@@ -42,7 +42,7 @@ class IdentificationScreen extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'Welkom',
-                  style: TextStyle(fontSize: 50.0, color: Colors.white),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(height: 10.0),
                 Text(

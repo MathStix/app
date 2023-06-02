@@ -24,7 +24,7 @@ class AnswerScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Vraag x',
-                style: TextStyle(fontSize: 30, color: Colors.white),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             SizedBox(height: 8),

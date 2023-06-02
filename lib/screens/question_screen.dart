@@ -88,12 +88,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     height: 40,
                   ),
                   Center(
-                    child: Text('Kies een vraag',
-                        style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
+                    child: Text(
+                      'Kies een vraag',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                   ),
                   Text(
                     'Voer de 6-letterige code in:',

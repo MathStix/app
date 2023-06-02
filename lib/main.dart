@@ -11,8 +11,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-      );
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
+      theme: ThemeData(
+          textTheme: const TextTheme(
+            //Stukje code waarmee je tekst componenten maakt
+              titleLarge: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white
+              )
+          )
+      ),
+    );
   }
 }

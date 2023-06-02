@@ -58,11 +58,8 @@ class _SplashScreenState extends State<SplashScreen>
             SizedBox(height: 20),
             Text(
               'MathStix',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 50,
+              style: Theme.of(context).textTheme.titleLarge,
               ),
-            )
           ],
         ),
       ),

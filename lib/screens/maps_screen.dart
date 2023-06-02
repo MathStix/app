@@ -30,7 +30,7 @@ class MapsScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Onderweg naar vraag x',
-                style: TextStyle(fontSize: 30, color: Colors.white),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             SizedBox(height: 8),

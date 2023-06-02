@@ -54,7 +54,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             Center(
               child: Text(
                 'Even geduld...',
-                style: TextStyle(fontSize: 38, color: Colors.white),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             SizedBox(height: 8),
