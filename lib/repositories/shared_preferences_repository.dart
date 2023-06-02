@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 class SharedPreferencesRepository {
 
+  static String? inTeam;
+
   static String? _deviceId;
   static String? _name;
 

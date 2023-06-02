@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nieuw/repositories/shared_preferences_repository.dart';
 import 'package:nieuw/repositories/websocket_repository.dart';
 import 'package:nieuw/screens/maps_screen.dart';
 import 'package:nieuw/screens/question_screen.dart';
@@ -20,7 +21,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
     WebsocketRepository.stream.listen((event) {
       Map<String, dynamic> json = jsonDecode(event);
 
+      print(json);
       if (json['message'] == "startGame") {
+        SharedPreferencesRepository.inTeam = json['teamId'];
         // TODO: Navigate to question screen
         Navigator.push(
           context,

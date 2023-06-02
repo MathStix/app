@@ -54,7 +54,8 @@ class AnswerScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => WhiteBoardScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => WhiteBoardScreen()),
                     );
                   },
                   text: 'Neem foto 1',
@@ -64,7 +65,8 @@ class AnswerScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CalculateScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => CalculateScreen()),
                     );
                   },
                   text: 'Neem foto 2',
@@ -99,7 +101,8 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
         ),
         primary: Color(0xFFFA6666),
-        minimumSize: Size(double.infinity, 100), // Set the desired button height
+        minimumSize:
+            Size(double.infinity, 100), // Set the desired button height
       ),
     );
   }

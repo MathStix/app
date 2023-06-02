@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
 import 'package:nieuw/models/Exercise.dart';
+import 'package:nieuw/repositories/exercise_repository.dart';
+import 'package:nieuw/repositories/shared_preferences_repository.dart';
 import 'package:nieuw/screens/maps_screen.dart';
 
 import '../utils/screen_pusher.dart';
@@ -38,13 +40,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
     });
   }
 
-  void load() async {
-    // Api call:
-    setState(() {
-      //
-    });
-  }
-
   @override
   void dispose() {
     timer.cancel();
@@ -54,10 +49,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   void startTimer() {
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        Duration timeElapsed = DateTime.now().difference(startTime);
-        formattedTime = formatDuration(timeElapsed);
-      });
+      // setState(() {
+      //   Duration timeElapsed = DateTime.now().difference(startTime);
+      //   formattedTime = formatDuration(timeElapsed);
+      // });
     });
   }
 
@@ -165,39 +160,29 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
                   ),
                   SizedBox(height: 10.0),
-                  CustomButton(
-                    exercise: Exercise(
-                        title: "Vraag 1",
-                        description: "Beschrijving",
-                        activationRange: "10",
-                        exerciseType: "text",
-                        answer: "100.0",
-                        location: "12,12",
-                        teacherId: "123",
-                        photo: "123"),
-                  ),
-                  CustomButton(
-                    exercise: Exercise(
-                        title: "Vraag 2",
-                        description: "Beschrijving",
-                        activationRange: "10",
-                        exerciseType: "photo",
-                        answer: "100.0",
-                        location: "12,12",
-                        teacherId: "123",
-                        photo: "123"),
-                  ),
-                  CustomButton(
-                    exercise: Exercise(
-                        title: "Vraag kaas",
-                        description: "Beschrijving",
-                        activationRange: "10",
-                        exerciseType: "geo",
-                        answer: "100.0",
-                        location: "12,12",
-                        teacherId: "123",
-                        photo: "123"),
-                  ),
+                  FutureBuilder(
+                      future: ExerciseRepository()
+                          .getExercises(SharedPreferencesRepository.inTeam!),
+                      builder: (context, snapshot) {
+                        print("Heb ik data: ${snapshot.data}");
+                        if (snapshot.hasData) {
+                          List<Exercise> exercises =
+                              snapshot.data as List<Exercise>;
+                          return Column(
+                            children: exercises
+                                .map((e) => CustomButton(
+                                      exercise: e,
+                                    ))
+                                .toList(),
+                          );
+                        }
+                        return Container(
+                            child: Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.red,
+                          ),
+                        ));
+                      }),
                   const SizedBox(
                     height: 10.0,
                   ),
@@ -236,37 +221,43 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(
-        8.0,
-      ),
-      child: ElevatedButton(
-        onPressed: () {
-          switch (exercise.exerciseType) {
-            case "text":
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => TextScreen()),
-              // );
-              break;
-            case "geo":
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MapsScreen()),
-              // );
-              break;
-          }
-        },
-        style: ElevatedButton.styleFrom(
-          fixedSize: Size.fromHeight(95.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-          ),
-          primary: Color(0xFFFA6666),
+    return SizedBox(
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.all(
+          8.0,
         ),
-        child: Text(
-          exercise.title,
-          style: TextStyle(fontSize: 24),
+        child: ElevatedButton(
+          onPressed: () {
+            print(exercise.exerciseType);
+            switch (exercise.exerciseType) {
+              case "text":
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => TextScreen()),
+                // );
+                break;
+              case "geo":
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => MapsScreen()),
+                // );
+                break;
+              case "degree":
+                break;
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            fixedSize: Size.fromHeight(95.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            ),
+            primary: Color(0xFFFA6666),
+          ),
+          child: Text(
+            exercise.title,
+            style: TextStyle(fontSize: 24),
+          ),
         ),
       ),
     );
