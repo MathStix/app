@@ -87,7 +87,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
                         color: Colors.white
-
                       )
                     ),
                   ),

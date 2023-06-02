@@ -15,7 +15,6 @@ class IdentificationScreen extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            primary: Color(0xFFFA6666),
             onPrimary: Colors.white,
             textStyle: TextStyle(
               color: Colors.white,
