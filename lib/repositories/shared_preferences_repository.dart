@@ -1,6 +1,9 @@
+import 'dart:js_interop';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:nieuw/repositories/player_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'general_repository.dart';
 
@@ -25,9 +28,16 @@ class SharedPreferencesRepository {
     _sharedPreferences = await SharedPreferences.getInstance();
 
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    if (kIsWeb) {
+      WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
 
-    _deviceId = androidInfo.id;
+      _deviceId = webBrowserInfo.userAgent;
+    } else {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+
+      _deviceId = androidInfo.id;
+    }
+
     _name = _sharedPreferences!.getString('name');
 
     print("Device id: $_deviceId");

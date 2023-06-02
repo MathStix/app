@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nieuw/repositories/shared_preferences_repository.dart';
-import 'package:nieuw/screens/answerquestion_screen.dart';
 import 'package:nieuw/screens/code_screen.dart';
-import 'package:nieuw/screens/home_screen.dart';
 import 'package:nieuw/screens/identification_screen.dart';
-import 'package:nieuw/screens/maps_screen.dart';
-import 'package:nieuw/screens/question_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
