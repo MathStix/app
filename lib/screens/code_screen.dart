@@ -139,11 +139,11 @@ class _CodeScreenState extends State<CodeScreen> {
               SizedBox(height: 10.0),
               Text(
                 _errorMessage,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Colors.red
                 ),
+
+
               ),
             ],
           ),

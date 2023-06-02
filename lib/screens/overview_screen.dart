@@ -61,7 +61,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
             Center(
               child: Text(
                 'Er zitten x mensen in de lobby',
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             SizedBox(height: 34),
@@ -142,7 +142,7 @@ class CustomFigure extends StatelessWidget {
         SizedBox(height: 8),
         Text(
           'Naam',
-          style: TextStyle(fontSize: 15, color: Colors.white),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ],
     );

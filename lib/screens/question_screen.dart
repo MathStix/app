@@ -95,11 +95,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   ),
                   Text(
                     'Voer de 6-letterige code in:',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
+
                   ),
                   SizedBox(height: 10.0),
                   Row(
@@ -162,11 +159,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   SizedBox(height: 10.0),
                   Text(
                     _errorMessage,
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Colors.red
                     ),
+
                   ),
                   SizedBox(height: 10.0),
                   CustomButton(

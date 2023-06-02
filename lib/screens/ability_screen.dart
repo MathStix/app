@@ -27,7 +27,7 @@ class AbilityScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Er zitten x mensen in de lobby',
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             SizedBox(height: 34),
@@ -41,7 +41,7 @@ class AbilityScreen extends StatelessWidget {
             SizedBox(height: 8),
             Text(
               'Deze ability helpt je later in de game en wordt gekozen aan de hand van heel je groep',
-              style: TextStyle(fontSize: 16, color: Colors.white),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             SizedBox(height: 24),
             Column(

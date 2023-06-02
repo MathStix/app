@@ -119,7 +119,7 @@ class _FrozenScreenState extends State<FrozenScreen>
             Center(
               child: Text(
                 'Veiligheid boven alles, sta niet stil op de weg!',
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
           ],

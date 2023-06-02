@@ -44,7 +44,7 @@ class CalculateScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Vraagstelling',
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             SizedBox(height: 20),

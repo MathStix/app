@@ -31,7 +31,7 @@ class AnswerScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Zoek drie vormen van lijnsymmetrie',
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             SizedBox(height: 34),
