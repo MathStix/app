@@ -1,18 +1,38 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nieuw/repositories/websocket_repository.dart';
 import 'package:nieuw/screens/maps_screen.dart';
 import 'package:nieuw/screens/question_screen.dart';
 
-class OverviewScreen extends StatelessWidget {
+class OverviewScreen extends StatefulWidget {
+  @override
+  State<OverviewScreen> createState() => _OverviewScreenState();
+}
+
+class _OverviewScreenState extends State<OverviewScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    // We asume the websocket connection is OK
+    WebsocketRepository.stream.listen((event) {
+      var json = jsonDecode(event);
+      if (json['message'] == 'startGame') {
+        print("Started game!");
+      }
+      print(json);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => QuestionScreen()),
-      );
-    });
-
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -54,6 +74,10 @@ class OverviewScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => QuestionScreen()),
+                    );
                   },
                   child: Text('WIJZIG'),
                   style: ElevatedButton.styleFrom(
@@ -77,12 +101,12 @@ class OverviewScreen extends StatelessWidget {
               mainAxisSpacing: 10.0,
               crossAxisSpacing: 10.0,
               children: [
-                CustomFigure(),
-                CustomFigure(),
-                CustomFigure(),
-                CustomFigure(),
-                CustomFigure(),
-                CustomFigure(),
+                // CustomFigure(),
+                // CustomFigure(),
+                // CustomFigure(),
+                // CustomFigure(),
+                // CustomFigure(),
+                // CustomFigure(),
               ],
             ),
             SizedBox(height: 36),

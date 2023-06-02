@@ -40,6 +40,7 @@ class _FrozenScreenState extends State<FrozenScreen>
         } else {
           timer.cancel();
           // Countdown finished, navigate to next screen
+          Navigator.pop(context);
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AnswerScreen()),

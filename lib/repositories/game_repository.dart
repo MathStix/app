@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:nieuw/repositories/general_repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:nieuw/repositories/shared_preferences_repository.dart';
 
 class GameRepository {
 
@@ -18,15 +19,18 @@ class GameRepository {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'deviceId': "123456789",
+        'deviceId': SharedPreferencesRepository.deviceId!,
         'gameCode': code,
       }),
     );
 
     Map<String, dynamic> json = jsonDecode(response.body);
     _chosenGameId = json['_id'];
+    print("Chosen game id " + _chosenGameId!);
 
-    return response.statusCode == 200;
+    print(response.statusCode);
+
+    return response.statusCode == 201;
   }
 
 

@@ -4,9 +4,9 @@ import 'package:flutter/widgets.dart';
 class Exercise {
   String title;
   String description;
-  String answer;
+  String? answer;
   String location;
-  String photo;
+  String? photo;
   String activationRange;
   String exerciseType;
   String teacherId;
@@ -14,9 +14,9 @@ class Exercise {
   Exercise({
     required this.title,
     required this.description,
-    required this.answer,
+    this.answer,
     required this.location,
-    required this.photo,
+    this.photo,
     required this.activationRange,
     required this.exerciseType,
     required this.teacherId,

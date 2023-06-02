@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
+import 'package:nieuw/models/Exercise.dart';
 import 'package:nieuw/screens/maps_screen.dart';
 
 import '../utils/screen_pusher.dart';
@@ -34,6 +35,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
       print("new event");
       isPlaying = controller.state == ConfettiControllerState.playing;
       print("isplaying : $isPlaying");
+    });
+  }
+
+  void load() async {
+    // Api call:
+    setState(() {
+      //
     });
   }
 
@@ -80,15 +88,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     height: 40,
                   ),
                   Center(
-                    child: Text(
-                      'Kies een vraag',
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white
-                      )
-                    ),
+                    child: Text('Kies een vraag',
+                        style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
                   ),
                   Text(
                     'Voer de 6-letterige code in:',
@@ -140,8 +145,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   ),
                   SizedBox(height: 10.0),
                   ElevatedButton(
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(40.0, 65.0),
                       shape: RoundedRectangleBorder(
@@ -167,10 +171,42 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     ),
                   ),
                   SizedBox(height: 10.0),
-                  CustomButton(text: 'Vraag 1',),
-                  CustomButton(text: 'Vraag 2',),
-                  CustomButton(text: 'Vraag 3',),
-                  SizedBox(height: 10.0),
+                  CustomButton(
+                    exercise: Exercise(
+                        title: "Vraag 1",
+                        description: "Beschrijving",
+                        activationRange: "10",
+                        exerciseType: "text",
+                        answer: "100.0",
+                        location: "12,12",
+                        teacherId: "123",
+                        photo: "123"),
+                  ),
+                  CustomButton(
+                    exercise: Exercise(
+                        title: "Vraag 2",
+                        description: "Beschrijving",
+                        activationRange: "10",
+                        exerciseType: "photo",
+                        answer: "100.0",
+                        location: "12,12",
+                        teacherId: "123",
+                        photo: "123"),
+                  ),
+                  CustomButton(
+                    exercise: Exercise(
+                        title: "Vraag kaas",
+                        description: "Beschrijving",
+                        activationRange: "10",
+                        exerciseType: "geo",
+                        answer: "100.0",
+                        location: "12,12",
+                        teacherId: "123",
+                        photo: "123"),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
                   Center(
                     child: Text(
                       'Tijd op pagina: $formattedTime',
@@ -200,31 +236,43 @@ class _QuestionScreenState extends State<QuestionScreen> {
 }
 
 class CustomButton extends StatelessWidget {
-  final String text;
+  final Exercise exercise;
 
-  const CustomButton({required this.text});
+  const CustomButton({required this.exercise});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(
+        8.0,
+      ),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MapsScreen()),
-          );
+          switch (exercise.exerciseType) {
+            case "text":
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => TextScreen()),
+              // );
+              break;
+            case "geo":
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MapsScreen()),
+              // );
+              break;
+          }
         },
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 24),
-        ),
         style: ElevatedButton.styleFrom(
           fixedSize: Size.fromHeight(95.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.0),
           ),
           primary: Color(0xFFFA6666),
+        ),
+        child: Text(
+          exercise.title,
+          style: TextStyle(fontSize: 24),
         ),
       ),
     );

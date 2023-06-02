@@ -1,11 +1,7 @@
-import 'dart:js_interop';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:nieuw/repositories/player_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
-import 'general_repository.dart';
 
 class SharedPreferencesRepository {
 
