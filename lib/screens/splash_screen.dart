@@ -24,7 +24,10 @@ class _SplashScreenState extends State<SplashScreen>
   void load() async {
     await SharedPreferencesRepository.init();
 
-    SharedPreferencesRepository.updateProfile();
+
+    if (SharedPreferencesRepository.isKnown) {
+      await SharedPreferencesRepository.updateProfile();
+    };
 
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(

@@ -5,6 +5,7 @@ import 'package:nieuw/screens/answerquestion_screen.dart';
 
 class CalculateScreen extends StatelessWidget {
   TextEditingController nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,10 +25,10 @@ class CalculateScreen extends StatelessWidget {
             Center(
               child: Text(
                 'Vraagnaam',
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: TextStyle(fontSize: 26, color: Colors.white),
               ),
             ),
-            SizedBox(height: 220),
+            SizedBox(height: 16),
             Center(
               child: ElevatedButton(
                 onPressed: () {},
@@ -40,22 +41,32 @@ class CalculateScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 24),
             Center(
               child: Text(
                 'Vraagstelling',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Center(
-              child: Image.asset(
-                'assets/questionexample.png',
-                width: 200,
-                height: 200,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(28.0),
+                  border: Border.all(
+                    color: Color(0xFFFA6666),
+                    width: 6.0,
+                  ),
+                ),
+                child: Image.asset(
+                  'assets/questionexample.png',
+                  height: 160,
+                ),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 16,
+            ),
             TextField(
               controller: nameController,
               style: TextStyle(color: Colors.black),

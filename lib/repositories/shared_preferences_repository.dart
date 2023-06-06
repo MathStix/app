@@ -40,6 +40,7 @@ class SharedPreferencesRepository {
 
     print("Device id: $_deviceId");
     print("Name: $_name");
+    print(SharedPreferencesRepository.isKnown);
   }
 
   static Future<void> updateProfile() async {
