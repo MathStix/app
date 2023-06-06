@@ -50,13 +50,9 @@ class GameRepository {
       }),
     );
 
-    Map<String, dynamic> json = jsonDecode(response.body);
-    _chosenGameId = json['_id'];
-    print("Chosen game id " + _chosenGameId!);
-
     print(response.statusCode);
 
-    return response.statusCode == 201;
+    return response.statusCode == 200;
   }
 
   static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';

@@ -144,7 +144,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           print("Foute code");
                         });
                         return;
-                      } else{
+                      }
+                      else{
                         ScreenPusher.pushScreen(context, FrozenScreen(), true);
                       }
                     },
