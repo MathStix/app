@@ -11,6 +11,8 @@ class GameRepository {
   static String? _chosenGameId;
 
   static Uri addPlayerUri = Uri.parse('${GeneralRepository.baseUrl}/addPlayer');
+  static Uri checkCodeUri = Uri.parse('${GeneralRepository.baseUrl}/guessword');
+
 
   static Future<bool> joinGame(String code) async {
     http.Response response = await http.post(
@@ -35,7 +37,7 @@ class GameRepository {
 
   static Future<bool> checkCode(String code) async {
     http.Response response = await http.post(
-      addPlayerUri,
+      checkCodeUri,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
