@@ -1,7 +1,8 @@
 import 'dart:typed_data';
 import 'package:finger_painter/finger_painter.dart';
 import 'package:flutter/material.dart';
-import 'package:nieuw/screens/answerquestion_screen.dart';
+import 'package:nieuw/screens/answers/answerquestion_screen.dart';
+import 'package:nieuw/screens/code_screen.dart';
 import 'package:nieuw/utils/color.dart';
 import 'package:nieuw/widgets/background.dart';
 
@@ -58,9 +59,10 @@ class _WhiteBoardScreenState extends State<WhiteBoardScreen> {
                     children: [
                       IconButton(
                         onPressed: () {
+                          // Navigator.pop(context);
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => AnswerScreen()),
+                            MaterialPageRoute(builder: (context) => CodeScreen()),
                           );
                         },
                         icon: const Icon(

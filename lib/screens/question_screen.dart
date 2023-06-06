@@ -6,12 +6,15 @@ import 'package:nieuw/models/Exercise.dart';
 import 'package:nieuw/repositories/exercise_repository.dart';
 import 'package:nieuw/repositories/shared_preferences_repository.dart';
 import 'package:nieuw/screens/maps_screen.dart';
+import 'package:nieuw/widgets/custom_timer.dart';
 
 import '../utils/screen_pusher.dart';
 import '../widgets/background.dart';
 import 'ability_screen.dart';
 
 class QuestionScreen extends StatefulWidget {
+  const QuestionScreen({super.key});
+
   @override
   _QuestionScreenState createState() => _QuestionScreenState();
 }
@@ -19,7 +22,9 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreenState extends State<QuestionScreen> {
   late DateTime startTime;
   late Timer timer;
-  String formattedTime = '00:00';
+
+  late ValueNotifier<int> seconds = ValueNotifier<int>(0);
+
   List<String> code = List.generate(6, (_) => '');
   final List<TextEditingController> _codeControllers =
       List.generate(6, (_) => TextEditingController());
@@ -34,9 +39,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     startTime = DateTime.now();
     startTimer();
     controller.addListener(() {
-      print("new event");
       isPlaying = controller.state == ConfettiControllerState.playing;
-      print("isplaying : $isPlaying");
     });
   }
 
@@ -49,22 +52,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   void startTimer() {
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      // setState(() {
-      //   Duration timeElapsed = DateTime.now().difference(startTime);
-      //   formattedTime = formatDuration(timeElapsed);
-      // });
+      seconds.value = DateTime.now().difference(startTime).inSeconds;
     });
-  }
-
-  String formatDuration(Duration duration) {
-    String twoDigits(int n) {
-      if (n >= 10) return "$n";
-      return "0$n";
-    }
-
-    String minutes = twoDigits(duration.inMinutes);
-    String seconds = twoDigits(duration.inSeconds.remainder(60));
-    return '$minutes:$seconds';
   }
 
   @override
@@ -75,11 +64,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
           GradientBackground(
             child: Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Center(
@@ -91,9 +80,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   Text(
                     'Voer de 6-letterige code in:',
                     style: Theme.of(context).textTheme.titleMedium,
-
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -106,8 +94,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             focusNode: _focusNodes[i],
                             maxLength: 1,
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
+                            style: const TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
@@ -133,17 +121,17 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         ),
                     ],
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      fixedSize: Size(40.0, 65.0),
+                      fixedSize: const Size(40.0, 65.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
                       ),
-                      primary: Color(0xFFFA6666),
+                      primary: const Color(0xFFFA6666),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Doorgaan',
                       style: TextStyle(
                         fontSize: 20.0,
@@ -151,51 +139,43 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Text(
                     _errorMessage,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.red
-                    ),
-
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(color: Colors.red),
                   ),
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   FutureBuilder(
-                      future: ExerciseRepository()
-                          .getExercises(SharedPreferencesRepository.inTeam!),
-                      builder: (context, snapshot) {
-                        print("Heb ik data: ${snapshot.data}");
-                        if (snapshot.hasData) {
-                          List<Exercise> exercises =
-                              snapshot.data as List<Exercise>;
-                          return Column(
-                            children: exercises
-                                .map((e) => CustomButton(
-                                      exercise: e,
-                                    ))
-                                .toList(),
-                          );
-                        }
-                        return Container(
-                            child: Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.red,
-                          ),
-                        ));
-                      }),
+                    future: ExerciseRepository()
+                        .getExercises(SharedPreferencesRepository.inTeam!),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<Exercise> exercises =
+                            snapshot.data as List<Exercise>;
+                        return Column(
+                          children: exercises
+                              .map((e) => CustomButton(
+                                    exercise: e,
+                                  ))
+                              .toList(),
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.red,
+                        ),
+                      );
+                    },
+                  ),
                   const SizedBox(
                     height: 10.0,
                   ),
-                  Center(
-                    child: Text(
-                      'Tijd op pagina: $formattedTime',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                  CustomTimer(
+                    seconds: seconds,
+                  )
                 ],
               ),
             ),
@@ -229,7 +209,6 @@ class CustomButton extends StatelessWidget {
         ),
         child: ElevatedButton(
           onPressed: () {
-            print(exercise.exerciseType);
             switch (exercise.exerciseType) {
               case "text":
                 // Navigator.push(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nieuw/screens/answerquestion_screen.dart';
+import 'package:nieuw/screens/answers/answerquestion_screen.dart';
 
 class CalculateScreen extends StatelessWidget {
   TextEditingController nameController = TextEditingController();

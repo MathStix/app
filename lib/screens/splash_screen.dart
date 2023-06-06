@@ -24,14 +24,15 @@ class _SplashScreenState extends State<SplashScreen>
   void load() async {
     await SharedPreferencesRepository.init();
 
-
     if (SharedPreferencesRepository.isKnown) {
-      await SharedPreferencesRepository.updateProfile();
-    };
+      SharedPreferencesRepository.updateProfile();
+    }
 
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) => SharedPreferencesRepository.isKnown ? CodeScreen() : IdentificationScreen(),
+        builder: (_) => SharedPreferencesRepository.isKnown
+            ? CodeScreen()
+            : IdentificationScreen(),
       ),
     );
   }
@@ -62,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen>
             Text(
               'MathStix',
               style: Theme.of(context).textTheme.titleLarge,
-              ),
+            ),
           ],
         ),
       ),

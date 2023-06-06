@@ -3,6 +3,7 @@ import 'package:nieuw/repositories/game_repository.dart';
 import 'package:nieuw/repositories/websocket_repository.dart';
 import 'package:nieuw/screens/ability_screen.dart';
 import 'package:nieuw/screens/overview_screen.dart';
+import 'package:nieuw/screens/white_board_screen.dart';
 import 'package:nieuw/widgets/background.dart'; // Importeer de GradientBackground-widget
 import '../utils/screen_pusher.dart';
 
@@ -119,8 +120,7 @@ class _CodeScreenState extends State<CodeScreen> {
                     });
                     return;
                   }
-                  bool websocketConnected =
-                      await WebsocketRepository.connect();
+                  bool websocketConnected = await WebsocketRepository.connect();
                   if (websocketConnected) {
                     ScreenPusher.pushScreen(context, OverviewScreen(), true);
                   } else
@@ -136,14 +136,25 @@ class _CodeScreenState extends State<CodeScreen> {
                   ),
                 ),
               ),
+              ElevatedButton(
+                onPressed: () async {
+                  ScreenPusher.pushScreen(context, WhiteBoardScreen(), true);
+                },
+                child: Text(
+                  'WHITEBOARD',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
               SizedBox(height: 10.0),
               Text(
                 _errorMessage,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Colors.red
-                ),
-
-
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(color: Colors.red),
               ),
             ],
           ),

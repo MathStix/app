@@ -27,7 +27,6 @@ class ExerciseRepository {
       Map<String, dynamic> data = jsonDecode(json);
       print(data);
       for (var item in data['unlockedExerciseIds']) {
-        print("hallo wereld");
         exercises.add(Exercise.fromJson(item));
       }
     }
