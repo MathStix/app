@@ -33,6 +33,27 @@ class GameRepository {
     return response.statusCode == 201;
   }
 
+  static Future<bool> checkCode(String code) async {
+    http.Response response = await http.post(
+      addPlayerUri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'gameId': _chosenGameId!,
+        'word': code,
+      }),
+    );
+
+    Map<String, dynamic> json = jsonDecode(response.body);
+    _chosenGameId = json['_id'];
+    print("Chosen game id " + _chosenGameId!);
+
+    print(response.statusCode);
+
+    return response.statusCode == 201;
+  }
+
 
   static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   static final Random _rnd = Random();

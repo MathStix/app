@@ -8,9 +8,12 @@ import 'package:nieuw/repositories/shared_preferences_repository.dart';
 import 'package:nieuw/screens/maps_screen.dart';
 import 'package:nieuw/widgets/custom_timer.dart';
 
+import '../repositories/game_repository.dart';
+import '../repositories/websocket_repository.dart';
 import '../utils/screen_pusher.dart';
 import '../widgets/background.dart';
 import 'ability_screen.dart';
+import 'frozen_screen.dart';
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key});
@@ -123,7 +126,27 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   ),
                   const SizedBox(height: 10.0),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      String code = '';
+                      for (int i = 0; i < 6; i++) {
+                        code += _codeControllers[i].text.toLowerCase();
+                      }
+
+                      bool joined = await GameRepository.checkCode(code);
+                      if (!joined) {
+                        setState(() {
+                          _errorMessage = 'Foute code. Probeer het opnieuw.';
+                        });
+                        return;
+                      }
+                      bool websocketConnected = await WebsocketRepository.connect();
+                      if (websocketConnected) {
+                        ScreenPusher.pushScreen(context, FrozenScreen(), true);
+                      } else
+                        setState(() {
+                          _errorMessage = 'Verbinding ging fout';
+                        });
+                    },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size(40.0, 65.0),
                       shape: RoundedRectangleBorder(
