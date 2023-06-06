@@ -43,7 +43,8 @@ class GameRepository {
       },
       body: jsonEncode(<String, String>{
         'gameId': _chosenGameId!,
-        'word': code,
+        'teamId': SharedPreferencesRepository.inTeam!,
+        'guessWord': code,
       }),
     );
 

@@ -141,16 +141,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       if (!joined) {
                         setState(() {
                           _errorMessage = 'Foute code. Probeer het opnieuw.';
+                          print("Foute code");
                         });
                         return;
-                      }
-                      bool websocketConnected = await WebsocketRepository.connect();
-                      if (websocketConnected) {
+                      } else{
                         ScreenPusher.pushScreen(context, FrozenScreen(), true);
-                      } else
-                        setState(() {
-                          _errorMessage = 'Verbinding ging fout';
-                        });
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size(40.0, 65.0),
