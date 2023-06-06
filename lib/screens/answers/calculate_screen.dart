@@ -17,7 +17,7 @@ class CalculateScreen extends StatelessWidget {
   void sendAnswer() async {
     Answer answer = Answer(
       exerciseId: exercise.id,
-      texts: [nameController.text.toString()],
+      texts: [nameController.text],
       photos: [],
       teamId: SharedPreferencesRepository.inTeam!,
       canvas: "",

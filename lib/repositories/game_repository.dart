@@ -10,6 +10,8 @@ class GameRepository {
   static final String _deviceId = getRandomString(10);
   static String? _chosenGameId;
 
+
+  static String? get chosenGameId => _chosenGameId;
   static Uri addPlayerUri = Uri.parse('${GeneralRepository.baseUrl}/addPlayer');
   static Uri checkCodeUri = Uri.parse('${GeneralRepository.baseUrl}/guessword');
 
