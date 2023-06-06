@@ -5,6 +5,7 @@ import 'package:confetti/confetti.dart';
 import 'package:nieuw/models/Exercise.dart';
 import 'package:nieuw/repositories/exercise_repository.dart';
 import 'package:nieuw/repositories/shared_preferences_repository.dart';
+import 'package:nieuw/screens/answers/calculate_screen.dart';
 import 'package:nieuw/screens/maps_screen.dart';
 import 'package:nieuw/widgets/custom_timer.dart';
 
@@ -23,6 +24,8 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
+  late Future<List<Exercise>> future;
+
   late DateTime startTime;
   late Timer timer;
 
@@ -39,6 +42,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   void initState() {
     super.initState();
+    future =
+        ExerciseRepository().getExercises(SharedPreferencesRepository.inTeam!);
     startTime = DateTime.now();
     startTimer();
     controller.addListener(() {
@@ -172,8 +177,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   ),
                   const SizedBox(height: 10.0),
                   FutureBuilder(
-                    future: ExerciseRepository()
-                        .getExercises(SharedPreferencesRepository.inTeam!),
+                    future: future,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         List<Exercise> exercises =
@@ -232,12 +236,12 @@ class CustomButton extends StatelessWidget {
         ),
         child: ElevatedButton(
           onPressed: () {
-            switch (exercise.exerciseType) {
+            switch (exercise.exerciseType.toLowerCase()) {
               case "text":
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => TextScreen()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CalculateScreen(exercise)),
+                );
                 break;
               case "geo":
                 // Navigator.push(

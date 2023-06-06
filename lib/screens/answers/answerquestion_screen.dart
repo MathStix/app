@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nieuw/screens/calculate_screen.dart';
+import 'package:nieuw/screens/answers/calculate_screen.dart';
 import 'package:nieuw/screens/white_board_screen.dart';
 
 class AnswerScreen extends StatelessWidget {
@@ -63,11 +63,11 @@ class AnswerScreen extends StatelessWidget {
                 SizedBox(height: 8),
                 CustomButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CalculateScreen()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => CalculateScreen()),
+                    // );
                   },
                   text: 'Neem foto 2',
                 ),

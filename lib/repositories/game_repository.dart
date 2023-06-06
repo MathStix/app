@@ -56,7 +56,6 @@ class GameRepository {
     return response.statusCode == 201;
   }
 
-
   static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   static final Random _rnd = Random();
 

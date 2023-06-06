@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 class Exercise {
+  String id;
   String title;
   String description;
   String? answer;
@@ -12,6 +10,7 @@ class Exercise {
   String teacherId;
 
   Exercise({
+    required this.id,
     required this.title,
     required this.description,
     this.answer,
@@ -24,6 +23,7 @@ class Exercise {
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
     return Exercise(
+      id: json['_id'],
       title: json['title'],
       description: json['description'],
       answer: json['answer'],
@@ -37,6 +37,7 @@ class Exercise {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'title': title,
       'description': description,
       'answer': answer,
