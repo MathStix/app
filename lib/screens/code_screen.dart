@@ -136,18 +136,6 @@ class _CodeScreenState extends State<CodeScreen> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  ScreenPusher.pushScreen(context, WhiteBoardScreen(), true);
-                },
-                child: Text(
-                  'WHITEBOARD',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
               SizedBox(height: 10.0),
               Text(
                 _errorMessage,

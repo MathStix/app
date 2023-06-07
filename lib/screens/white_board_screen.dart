@@ -1,13 +1,22 @@
+import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:finger_painter/finger_painter.dart';
 import 'package:flutter/material.dart';
-import 'package:nieuw/screens/answers/answerquestion_screen.dart';
+import 'package:nieuw/models/Exercise.dart';
+import 'package:nieuw/models/answer.dart';
+import 'package:nieuw/repositories/answer_repository.dart';
+import 'package:nieuw/repositories/exercise_repository.dart';
+import 'package:nieuw/repositories/shared_preferences_repository.dart';
 import 'package:nieuw/screens/code_screen.dart';
 import 'package:nieuw/utils/color.dart';
 import 'package:nieuw/widgets/background.dart';
+import 'package:screenshot/screenshot.dart';
 
 class WhiteBoardScreen extends StatefulWidget {
-  const WhiteBoardScreen({Key? key}) : super(key: key);
+  const WhiteBoardScreen({Key? key, required this.exercise}) : super(key: key);
+
+  final Exercise exercise;
 
   @override
   State<WhiteBoardScreen> createState() => _WhiteBoardScreenState();
@@ -15,6 +24,7 @@ class WhiteBoardScreen extends StatefulWidget {
 
 class _WhiteBoardScreenState extends State<WhiteBoardScreen> {
   PainterController _controller = PainterController();
+  ScreenshotController _screenShotController = ScreenshotController();
 
   late Color _chosenColor;
 
@@ -44,6 +54,34 @@ class _WhiteBoardScreenState extends State<WhiteBoardScreen> {
       ..setBlurSigma(0.0);
   }
 
+  void send() async {
+    Uint8List? image = await _screenShotController.capture();
+    if (image == null) {
+      print("GING FOUT");
+      return;
+    }
+    String base64 = base64Encode(image);
+    print(base64);
+
+    Answer answer = Answer(
+      texts: [],
+      exerciseId: widget.exercise.id,
+      teamId: SharedPreferencesRepository.inTeam!,
+      photos: [base64],
+      canvas: base64,
+    );
+    await AnswerRepository.getAnswer(answer);
+
+    String receivedLetter = await AnswerRepository.getAnswer(answer);
+    if (receivedLetter.isNotEmpty) {
+      ExerciseRepository.getExerciseById(widget.exercise.id).solved = true;
+      Navigator.pop(context, true);
+      print("GOED");
+    } else {
+      print("FOUT");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,10 +98,7 @@ class _WhiteBoardScreenState extends State<WhiteBoardScreen> {
                       IconButton(
                         onPressed: () {
                           // Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => CodeScreen()),
-                          );
+                          Navigator.pop(context);
                         },
                         icon: const Icon(
                           Icons.arrow_back_ios,
@@ -76,6 +111,16 @@ class _WhiteBoardScreenState extends State<WhiteBoardScreen> {
                           color: Colors.white,
                         ),
                       ),
+                      ElevatedButton(
+                        onPressed: send,
+                        child: Text('VERSTUUR'),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          primary: Color(0xFFFA6666),
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -83,29 +128,31 @@ class _WhiteBoardScreenState extends State<WhiteBoardScreen> {
             ),
             Flexible(
               flex: 8,
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    child: Painter(
-                      controller: _controller,
-                      backgroundColor: Colors.white.withOpacity(0.8),
-                      size: Size.infinite,
-                      child: Positioned.fill(
-                        child: Image.network(
-                          "https://www.wereldwonderen.com/cache/a/eiffeltoren_1.jpg",
-                          fit: BoxFit.fitHeight,
-                        ),
+              child: Screenshot(
+                controller: _screenShotController,
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
                       ),
-                      // onDrawingEnded: (data) {
-                      //   print(data);
-                      // },
+                      child: Painter(
+                        controller: _controller,
+                        backgroundColor: Colors.white.withOpacity(0.8),
+                        size: Size.infinite,
+                        child: Positioned.fill(
+                          child: Image.memory(
+                            base64Decode(widget.exercise.photo!),
+                          ),
+                        ),
+                        // onDrawingEnded: (data) {
+                        //   print(data);
+                        // },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

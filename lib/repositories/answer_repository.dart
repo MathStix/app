@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 class AnswerRepository {
   static Uri postAnswerUri = Uri.parse('${GeneralRepository.baseUrl}/answer');
+  static List<dynamic> guessedLetters = [];
 
   static Future<String> getAnswer(Answer answer) async {
     print("Print ${answer.teamId}");
@@ -25,7 +26,7 @@ class AnswerRepository {
           "gameId": GameRepository.chosenGameId!,
           "exerciseId": answer.exerciseId,
           "teamId": answer.teamId,
-          "photos": answer.photos.toString(),
+          "photos": jsonEncode(answer.photos),
         },
       ),
     );
@@ -34,7 +35,7 @@ class AnswerRepository {
     if (response.statusCode == 200) {
       String json = response.body;
       print(json);
-      Map<String, dynamic> data = jsonDecode(json);
+      guessedLetters = jsonDecode(json);
       return "a";
     }
     print("error");

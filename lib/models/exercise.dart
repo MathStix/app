@@ -8,6 +8,7 @@ class Exercise {
   String activationRange;
   String exerciseType;
   String teacherId;
+  bool solved;
 
   Exercise({
     required this.id,
@@ -19,6 +20,7 @@ class Exercise {
     required this.activationRange,
     required this.exerciseType,
     required this.teacherId,
+    this.solved = false,
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) {

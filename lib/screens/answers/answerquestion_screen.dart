@@ -52,11 +52,11 @@ class AnswerScreen extends StatelessWidget {
                 SizedBox(height: 60),
                 CustomButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => WhiteBoardScreen()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => WhiteBoardScreen()),
+                    // );
                   },
                   text: 'Neem foto 1',
                 ),

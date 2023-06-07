@@ -5,18 +5,24 @@ import 'package:flutter/services.dart';
 import 'package:nieuw/models/Exercise.dart';
 import 'package:nieuw/models/answer.dart';
 import 'package:nieuw/repositories/answer_repository.dart';
+import 'package:nieuw/repositories/exercise_repository.dart';
 import 'package:nieuw/repositories/shared_preferences_repository.dart';
 
-class CalculateScreen extends StatelessWidget {
+class CalculateScreen extends StatefulWidget {
   final Exercise exercise;
 
   CalculateScreen(this.exercise, {super.key});
 
+  @override
+  State<CalculateScreen> createState() => _CalculateScreenState();
+}
+
+class _CalculateScreenState extends State<CalculateScreen> {
   TextEditingController nameController = TextEditingController();
 
   void sendAnswer() async {
     Answer answer = Answer(
-      exerciseId: exercise.id,
+      exerciseId: widget.exercise.id,
       texts: [nameController.text],
       photos: [],
       teamId: SharedPreferencesRepository.inTeam!,
@@ -24,6 +30,8 @@ class CalculateScreen extends StatelessWidget {
     );
     String receivedLetter = await AnswerRepository.getAnswer(answer);
     if (receivedLetter.isNotEmpty) {
+      ExerciseRepository.getExerciseById(widget.exercise.id).solved = true;
+      Navigator.pop(context, true);
       print("GOED");
     } else {
       print("FOUT");
@@ -49,7 +57,7 @@ class CalculateScreen extends StatelessWidget {
               const SizedBox(height: 30),
               Center(
                 child: Text(
-                  exercise.title,
+                  widget.exercise.title,
                   style: const TextStyle(fontSize: 26, color: Colors.white),
                 ),
               ),
@@ -69,7 +77,7 @@ class CalculateScreen extends StatelessWidget {
               const SizedBox(height: 24),
               Center(
                 child: Text(
-                  exercise.description,
+                  widget.exercise.description,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -83,7 +91,7 @@ class CalculateScreen extends StatelessWidget {
                       width: 6.0,
                     ),
                   ),
-                  child: exercise.photo == null
+                  child: widget.exercise.photo == null
                       ? const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
@@ -91,7 +99,7 @@ class CalculateScreen extends StatelessWidget {
                             style: TextStyle(color: Colors.white),
                           ),
                         )
-                      : Image.memory(base64Decode(exercise.photo!)),
+                      : Image.memory(base64Decode(widget.exercise.photo!)),
                 ),
               ),
               const SizedBox(
