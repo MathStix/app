@@ -7,8 +7,10 @@ import 'package:nieuw/repositories/exercise_repository.dart';
 import 'package:nieuw/repositories/shared_preferences_repository.dart';
 import 'package:nieuw/screens/answers/calculate_screen.dart';
 import 'package:nieuw/screens/maps_screen.dart';
+import 'package:nieuw/screens/white_board_screen.dart';
 import 'package:nieuw/widgets/custom_timer.dart';
 
+import '../repositories/answer_repository.dart';
 import '../repositories/game_repository.dart';
 import '../repositories/websocket_repository.dart';
 import '../utils/screen_pusher.dart';
