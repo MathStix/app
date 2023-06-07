@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,17 +8,30 @@ import 'package:nieuw/repositories/websocket_repository.dart';
 import 'package:nieuw/screens/maps_screen.dart';
 import 'package:nieuw/screens/question_screen.dart';
 
+import '../widgets/custom_timer.dart';
+
 class OverviewScreen extends StatefulWidget {
   @override
   State<OverviewScreen> createState() => _OverviewScreenState();
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
+  ValueNotifier<int> timerValue = ValueNotifier<int>(0);
 
   @override
   void initState() {
     super.initState();
-    // We asume the websocket connection is OK
+    startTimer();
+  }
+
+  void startTimer() {
+    Future.delayed(Duration(seconds: 1), () {
+      timerValue.value += 1;
+      startTimer();
+    });
+
+
+    // We assume the websocket connection is OK
     WebsocketRepository.stream.listen((event) {
       Map<String, dynamic> json = jsonDecode(event);
 
@@ -31,11 +45,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
         );
       }
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -122,6 +131,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
             ),
+            CustomTimer(seconds: timerValue),
           ],
         ),
       ),

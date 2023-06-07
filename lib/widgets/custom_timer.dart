@@ -1,24 +1,41 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class CustomTimer extends StatefulWidget {
-  const CustomTimer({super.key, required this.seconds});
-
   final ValueNotifier<int> seconds;
 
+  const CustomTimer({required this.seconds});
+
   @override
-  State<CustomTimer> createState() => _CustomTimerState();
+  _CustomTimerState createState() => _CustomTimerState();
 }
 
 class _CustomTimerState extends State<CustomTimer> {
+  Timer? _timer;
+  int _elapsedSeconds = 0;
+
   @override
   void initState() {
     super.initState();
-    widget.seconds.addListener(() {
-      setState(() {});
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _elapsedSeconds += 1;
+      });
     });
   }
 
-  String formatDuration(Duration duration) {
+  String _formatDuration(Duration duration) {
     String twoDigits(int n) {
       if (n >= 10) return "$n";
       return "0$n";
@@ -31,14 +48,12 @@ class _CustomTimerState extends State<CustomTimer> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Tijd op pagina: ${formatDuration(Duration(seconds: widget.seconds.value))}',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-          fontWeight: FontWeight.bold,
-        ),
+    return Text(
+      'Tijd op de app: ${_formatDuration(Duration(seconds: _elapsedSeconds))}',
+      style: TextStyle(
+        fontSize: 16.0,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
       ),
     );
   }
