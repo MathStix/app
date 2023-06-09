@@ -6,6 +6,7 @@ import 'package:nieuw/models/Exercise.dart';
 import 'package:nieuw/repositories/exercise_repository.dart';
 import 'package:nieuw/repositories/shared_preferences_repository.dart';
 import 'package:nieuw/screens/answers/calculate_screen.dart';
+import 'package:nieuw/screens/final_screen.dart';
 import 'package:nieuw/screens/maps_screen.dart';
 import 'package:nieuw/screens/white_board_screen.dart';
 import 'package:nieuw/widgets/custom_timer.dart';
@@ -15,6 +16,8 @@ import '../repositories/game_repository.dart';
 import '../repositories/websocket_repository.dart';
 import '../utils/screen_pusher.dart';
 import '../widgets/background.dart';
+import '../widgets/custom_timer.dart';
+
 import 'ability_screen.dart';
 import 'frozen_screen.dart';
 
@@ -159,8 +162,8 @@ class _QuestionScreenState extends State<QuestionScreen>
                           });
                           return;
                         } else {
-                          ScreenPusher.pushScreen(
-                              context, FrozenScreen(), true);
+                          ScreenPusher.pushScreen(context, FinalScreen(), true);
+                          // timerWidget.stopTimer(); // Roept stopTimer aan om de timer te stoppen
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -215,7 +218,6 @@ class _QuestionScreenState extends State<QuestionScreen>
                       height: 10.0,
                     ),
                     CustomTimer(
-                      seconds: seconds,
                     )
                   ],
                 ),

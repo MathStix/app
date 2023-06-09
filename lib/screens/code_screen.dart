@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nieuw/repositories/game_repository.dart';
 import 'package:nieuw/repositories/websocket_repository.dart';
@@ -5,6 +6,7 @@ import 'package:nieuw/screens/ability_screen.dart';
 import 'package:nieuw/screens/overview_screen.dart';
 import 'package:nieuw/screens/white_board_screen.dart';
 import 'package:nieuw/widgets/background.dart'; // Importeer de GradientBackground-widget
+import 'package:nieuw/widgets/custom_timer.dart';
 import '../utils/screen_pusher.dart';
 
 class CodeScreen extends StatefulWidget {
@@ -14,9 +16,19 @@ class CodeScreen extends StatefulWidget {
 
 class _CodeScreenState extends State<CodeScreen> {
   final List<TextEditingController> _codeControllers =
-      List.generate(4, (_) => TextEditingController());
+  List.generate(4, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
   String _errorMessage = '';
+  late ValueNotifier<int> seconds;
+  late CustomTimer customTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    seconds = ValueNotifier<int>(0);
+    customTimer = CustomTimer();
+    startTimer();
+  }
 
   @override
   void dispose() {
@@ -24,6 +36,17 @@ class _CodeScreenState extends State<CodeScreen> {
       focusNode.dispose();
     }
     super.dispose();
+  }
+
+  void startTimer() {
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (seconds.value == -10) {
+        timer.cancel();
+        print("Timer is gestopt");
+      } else {
+        seconds.value += 1;
+      }
+    });
   }
 
   @override
@@ -144,6 +167,7 @@ class _CodeScreenState extends State<CodeScreen> {
                     .titleMedium
                     ?.copyWith(color: Colors.red),
               ),
+              CustomTimer(),
             ],
           ),
         ),

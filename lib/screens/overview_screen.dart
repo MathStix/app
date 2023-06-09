@@ -16,7 +16,7 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
-  ValueNotifier<int> timerValue = ValueNotifier<int>(0);
+  ValueNotifier<int> timerValue = ValueNotifier<int>(-10);
 
   @override
   void initState() {
@@ -130,7 +130,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
             ),
-            CustomTimer(seconds: timerValue),
+            CustomTimer(),
           ],
         ),
       ),

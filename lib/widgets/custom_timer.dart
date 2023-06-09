@@ -1,11 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:nieuw/repositories/general_repository.dart';
 
 class CustomTimer extends StatefulWidget {
-  final ValueNotifier<int> seconds;
-
-  const CustomTimer({required this.seconds});
 
   @override
   _CustomTimerState createState() => _CustomTimerState();
@@ -13,7 +10,7 @@ class CustomTimer extends StatefulWidget {
 
 class _CustomTimerState extends State<CustomTimer> {
   Timer? _timer;
-  int _elapsedSeconds = 0;
+  bool _isTimerRunning = true;
 
   @override
   void initState() {
@@ -29,10 +26,21 @@ class _CustomTimerState extends State<CustomTimer> {
 
   void _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        _elapsedSeconds += 1;
-      });
+      if (_isTimerRunning) {
+        setState(() {
+          GeneralRepository.seconds.value += 1;
+        });
+        if
+        (GeneralRepository.seconds.value == -10) {
+          stopTimer();
+          print("Timer is gestopt");
+        }
+      }
     });
+  }
+
+  void stopTimer() {
+    _isTimerRunning = false;
   }
 
   String _formatDuration(Duration duration) {
@@ -49,7 +57,7 @@ class _CustomTimerState extends State<CustomTimer> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Tijd op de app: ${_formatDuration(Duration(seconds: _elapsedSeconds))}',
+      'Tijd op de app: ${_formatDuration(Duration(seconds: GeneralRepository.seconds.value))}',
       style: TextStyle(
         fontSize: 16.0,
         fontWeight: FontWeight.bold,
