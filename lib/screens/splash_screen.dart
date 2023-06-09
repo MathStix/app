@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nieuw/repositories/shared_preferences_repository.dart';
+import 'package:nieuw/screens/answers/triangle_ruler_screen.dart';
 import 'package:nieuw/screens/code_screen.dart';
 import 'package:nieuw/screens/identification_screen.dart';
 
@@ -31,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => SharedPreferencesRepository.isKnown
-            ? CodeScreen()
+            ? RulerScreen()
             : IdentificationScreen(),
       ),
     );
