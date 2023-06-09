@@ -22,14 +22,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
   void initState() {
     super.initState();
     startTimer();
-  }
-
-  void startTimer() {
-    Future.delayed(Duration(seconds: 1), () {
-      timerValue.value += 1;
-      startTimer();
-    });
-
 
     // We assume the websocket connection is OK
     WebsocketRepository.stream.listen((event) {
@@ -44,6 +36,13 @@ class _OverviewScreenState extends State<OverviewScreen> {
           MaterialPageRoute(builder: (context) => QuestionScreen()),
         );
       }
+    });
+  }
+
+  void startTimer() {
+    Future.delayed(Duration(seconds: 1), () {
+      timerValue.value += 1;
+      startTimer();
     });
   }
 

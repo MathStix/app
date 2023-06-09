@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:finger_painter/finger_painter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:nieuw/models/Exercise.dart';
 import 'package:nieuw/models/answer.dart';
 import 'package:nieuw/repositories/answer_repository.dart';
@@ -60,8 +63,10 @@ class _WhiteBoardScreenState extends State<WhiteBoardScreen> {
       print("GING FOUT");
       return;
     }
-    String base64 = base64Encode(image);
-    print(base64);
+    var compressedImage = await FlutterImageCompress.compressWithList(image, quality: 30);
+
+    String base64 = base64Encode(compressedImage);
+    log(base64);
 
     Answer answer = Answer(
       texts: [],

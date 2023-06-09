@@ -20,7 +20,7 @@ class WebsocketRepository {
         "deviceId": SharedPreferencesRepository.deviceId,
       }));
       channel.stream.listen((event) {
-        print("eventje: " + event);
+        print("eventje:_streamController " + event);
         _streamController.add(event);
       });
       return true;

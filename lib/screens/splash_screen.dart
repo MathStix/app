@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => SharedPreferencesRepository.isKnown
-            ? RulerScreen()
+            ? CodeScreen()
             : IdentificationScreen(),
       ),
     );
