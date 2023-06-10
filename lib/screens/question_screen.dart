@@ -6,6 +6,7 @@ import 'package:nieuw/models/Exercise.dart';
 import 'package:nieuw/repositories/exercise_repository.dart';
 import 'package:nieuw/repositories/shared_preferences_repository.dart';
 import 'package:nieuw/screens/answers/calculate_screen.dart';
+import 'package:nieuw/screens/answers/triangle_ruler_screen.dart';
 import 'package:nieuw/screens/final_screen.dart';
 import 'package:nieuw/screens/maps_screen.dart';
 import 'package:nieuw/screens/white_board_screen.dart';
@@ -287,7 +288,17 @@ class _CustomButtonState extends State<CustomButton> {
                 widget.callback();
                 setState(() {});
                 break;
-              case "degree":
+              case "geo":
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RulerScreen(
+                      exercise: widget.exercise,
+                    ),
+                  ),
+                );
+                widget.callback();
+                setState(() {});
                 break;
             }
           },

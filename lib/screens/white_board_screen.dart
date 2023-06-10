@@ -27,7 +27,7 @@ class WhiteBoardScreen extends StatefulWidget {
 
 class _WhiteBoardScreenState extends State<WhiteBoardScreen> {
   PainterController _controller = PainterController();
-  ScreenshotController _screenShotController = ScreenshotController();
+  final ScreenshotController _screenShotController = ScreenshotController();
 
   late Color _chosenColor;
 
