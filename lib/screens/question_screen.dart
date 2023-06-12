@@ -45,6 +45,7 @@ class _QuestionScreenState extends State<QuestionScreen>
   String _errorMessage = '';
   final controller = ConfettiController();
   bool isPlaying = false;
+  ValueNotifier<int> timerValue = ValueNotifier<int>(-10);
 
   @override
   void initState() {
@@ -55,7 +56,9 @@ class _QuestionScreenState extends State<QuestionScreen>
     startTimer();
     controller.addListener(() {
       isPlaying = controller.state == ConfettiControllerState.playing;
-    });
+    }
+
+    );
   }
 
   @override
@@ -219,7 +222,7 @@ class _QuestionScreenState extends State<QuestionScreen>
                       height: 10.0,
                     ),
                     CustomTimer(
-                    )
+                    ),
                   ],
                 ),
               ),

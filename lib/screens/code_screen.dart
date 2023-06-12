@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nieuw/repositories/game_repository.dart';
+import 'package:nieuw/repositories/general_repository.dart';
 import 'package:nieuw/repositories/websocket_repository.dart';
 import 'package:nieuw/screens/ability_screen.dart';
 import 'package:nieuw/screens/overview_screen.dart';
@@ -28,6 +29,8 @@ class _CodeScreenState extends State<CodeScreen> {
     seconds = ValueNotifier<int>(0);
     customTimer = CustomTimer();
     startTimer();
+    print(seconds);
+    GeneralRepository.myBoolean.value = true;
   }
 
   @override
@@ -167,7 +170,6 @@ class _CodeScreenState extends State<CodeScreen> {
                     .titleMedium
                     ?.copyWith(color: Colors.red),
               ),
-              CustomTimer(),
             ],
           ),
         ),

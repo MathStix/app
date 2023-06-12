@@ -8,6 +8,7 @@ import 'package:nieuw/repositories/websocket_repository.dart';
 import 'package:nieuw/screens/maps_screen.dart';
 import 'package:nieuw/screens/question_screen.dart';
 
+import '../repositories/general_repository.dart';
 import '../widgets/custom_timer.dart';
 
 class OverviewScreen extends StatefulWidget {
@@ -16,13 +17,16 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
-  ValueNotifier<int> timerValue = ValueNotifier<int>(-10);
+  late CustomTimer customTimer;
+
 
   @override
   void initState() {
     super.initState();
-    startTimer();
+    GeneralRepository.myBoolean.value = true;
+    customTimer = CustomTimer();
 
+    print(GeneralRepository.seconds.value);
     // We assume the websocket connection is OK
     WebsocketRepository.stream.listen((event) {
       Map<String, dynamic> json = jsonDecode(event);
@@ -36,13 +40,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
           MaterialPageRoute(builder: (context) => QuestionScreen()),
         );
       }
-    });
-  }
-
-  void startTimer() {
-    Future.delayed(Duration(seconds: 1), () {
-      timerValue.value += 1;
-      startTimer();
     });
   }
 
@@ -130,7 +127,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
             ),
-            CustomTimer(),
+
+            CustomTimer(
+            ),
           ],
         ),
       ),

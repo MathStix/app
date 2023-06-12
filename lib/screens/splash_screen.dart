@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nieuw/repositories/shared_preferences_repository.dart';
-import 'package:nieuw/screens/answers/mirror_screen.dart';
 import 'package:nieuw/screens/answers/triangle_ruler_screen.dart';
 import 'package:nieuw/screens/code_screen.dart';
+import 'package:nieuw/screens/final_screen.dart';
 import 'package:nieuw/screens/identification_screen.dart';
+
+import '../repositories/general_repository.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -19,6 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    GeneralRepository.myBoolean.value = false;
 
     load();
   }

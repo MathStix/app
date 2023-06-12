@@ -16,6 +16,7 @@ class _CustomTimerState extends State<CustomTimer> {
   void initState() {
     super.initState();
     _startTimer();
+    stopTimer();
   }
 
   @override
@@ -26,15 +27,15 @@ class _CustomTimerState extends State<CustomTimer> {
 
   void _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (_isTimerRunning) {
+      if (GeneralRepository.myBoolean.value == false) {
+        stopTimer();
+        print("Timer is gestopt");
+      }
+      else {
         setState(() {
           GeneralRepository.seconds.value += 1;
+          print("werkt dit?");
         });
-        if
-        (GeneralRepository.seconds.value == -10) {
-          stopTimer();
-          print("Timer is gestopt");
-        }
       }
     });
   }
