@@ -29,12 +29,10 @@ class _CustomTimerState extends State<CustomTimer> {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (GeneralRepository.myBoolean.value == false) {
         stopTimer();
-        print("Timer is gestopt");
       }
       else {
         setState(() {
           GeneralRepository.seconds.value += 1;
-          print("werkt dit?");
         });
       }
     });

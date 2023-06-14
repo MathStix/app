@@ -51,7 +51,8 @@ class _RulerScreenState extends State<RulerScreen> {
       print("GING FOUT");
       return;
     }
-    var compressedImage = await FlutterImageCompress.compressWithList(image, quality: 30);
+    var compressedImage =
+        await FlutterImageCompress.compressWithList(image, quality: 30);
 
     String base64 = base64Encode(compressedImage);
     log(base64);
@@ -63,7 +64,6 @@ class _RulerScreenState extends State<RulerScreen> {
       photos: [base64],
       canvas: base64,
     );
-    await AnswerRepository.getAnswer(answer);
 
     String receivedLetter = await AnswerRepository.getAnswer(answer);
     if (receivedLetter.isNotEmpty) {
@@ -119,6 +119,12 @@ class _RulerScreenState extends State<RulerScreen> {
               ),
               child: Column(
                 children: [
+                  Center(
+                    child: SelectableText(
+                      "Locatie ${widget.exercise.location}",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
                   Slider(
                     value: _transparency,
                     max: 100,

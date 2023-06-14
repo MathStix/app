@@ -34,6 +34,12 @@ class _CalculateScreenState extends State<CalculateScreen> {
       Navigator.pop(context, true);
       print("GOED");
     } else {
+      // Show bottom sheet with error
+      showModalBottomSheet(context: context, builder: (context) => Padding(
+        padding: const EdgeInsets.all(64.0),
+        child: const Text("FOUT"),
+      ));
+
       print("FOUT");
     }
   }
@@ -50,92 +56,106 @@ class _CalculateScreenState extends State<CalculateScreen> {
           ),
         ),
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 30),
-              Center(
-                child: Text(
-                  widget.exercise.title,
-                  style: const TextStyle(fontSize: 26, color: Colors.white),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                    ),
-                    primary: const Color(0xFFFA6666),
+        child: SizedBox.expand(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 30),
+                Center(
+                  child: SelectableText(
+                    "Locatie ${widget.exercise.location}",
+                    style: TextStyle(color: Colors.white),
                   ),
-                  child: Text('POWERUP INZETTEN'),
                 ),
-              ),
-              const SizedBox(height: 24),
-              Center(
-                child: Text(
-                  widget.exercise.description,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(28.0),
-                    border: Border.all(
-                      color: const Color(0xFFFA6666),
-                      width: 6.0,
-                    ),
+                const SizedBox(height: 8),
+                Center(
+                  child: Text(
+                    widget.exercise.title,
+                    style: const TextStyle(fontSize: 26, color: Colors.white),
                   ),
-                  child: widget.exercise.photo == null
-                      ? const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Geen plaatje :(",
-                            style: TextStyle(color: Colors.white),
+                ),
+                const SizedBox(height: 16),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      primary: const Color(0xFFFA6666),
+                    ),
+                    child: Text('POWERUP INZETTEN'),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Center(
+                  child: Text(
+                    widget.exercise.description,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(28.0),
+                      border: Border.all(
+                        color: const Color(0xFFFA6666),
+                        width: 6.0,
+                      ),
+                    ),
+                    child: widget.exercise.photo == null
+                        ? const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              "Geen plaatje :(",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(28.0),
+                            child: Image.memory(
+                              base64Decode(widget.exercise.photo!),
+                            ),
                           ),
-                        )
-                      : Image.memory(base64Decode(widget.exercise.photo!)),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              TextField(
-                controller: nameController,
-                style: const TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  labelText: 'Antwoord...',
-                  labelStyle: const TextStyle(color: Colors.black),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    borderSide: const BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    borderSide: const BorderSide(color: Colors.white),
                   ),
                 ),
-              ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: sendAnswer,
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
+                const SizedBox(
+                  height: 16,
+                ),
+                TextField(
+                  controller: nameController,
+                  style: const TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    labelText: 'Antwoord...',
+                    labelStyle: const TextStyle(color: Colors.black),
+                    enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18.0),
+                      borderSide: const BorderSide(color: Colors.white),
                     ),
-                    primary: const Color(0xFFFA6666),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      borderSide: const BorderSide(color: Colors.white),
+                    ),
                   ),
-                  child: Text('VERSTUREN'),
                 ),
-              ),
-            ],
+                Center(
+                  child: ElevatedButton(
+                    onPressed: sendAnswer,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      primary: const Color(0xFFFA6666),
+                    ),
+                    child: Text('VERSTUREN'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

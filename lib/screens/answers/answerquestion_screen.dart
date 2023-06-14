@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nieuw/screens/answers/calculate_screen.dart';
-import 'package:nieuw/screens/white_board_screen.dart';
 
 class AnswerScreen extends StatelessWidget {
   @override
@@ -21,6 +18,7 @@ class AnswerScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 30),
+
             Center(
               child: Text(
                 'Vraag x',

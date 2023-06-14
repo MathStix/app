@@ -75,7 +75,6 @@ class _WhiteBoardScreenState extends State<WhiteBoardScreen> {
       photos: [base64],
       canvas: base64,
     );
-    await AnswerRepository.getAnswer(answer);
 
     String receivedLetter = await AnswerRepository.getAnswer(answer);
     if (receivedLetter.isNotEmpty) {

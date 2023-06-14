@@ -6,6 +6,7 @@ import 'package:nieuw/models/Exercise.dart';
 import 'package:nieuw/repositories/exercise_repository.dart';
 import 'package:nieuw/repositories/shared_preferences_repository.dart';
 import 'package:nieuw/screens/answers/calculate_screen.dart';
+import 'package:nieuw/screens/answers/mirror_screen.dart';
 import 'package:nieuw/screens/answers/triangle_ruler_screen.dart';
 import 'package:nieuw/screens/final_screen.dart';
 import 'package:nieuw/screens/maps_screen.dart';
@@ -296,6 +297,18 @@ class _CustomButtonState extends State<CustomButton> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => RulerScreen(
+                      exercise: widget.exercise,
+                    ),
+                  ),
+                );
+                widget.callback();
+                setState(() {});
+                break;
+              case "mirror":
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MirrorScreen(
                       exercise: widget.exercise,
                     ),
                   ),

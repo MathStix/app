@@ -38,7 +38,6 @@ class AnswerRepository {
       guessedLetters = jsonDecode(json);
       return "a";
     }
-    print("error");
     return '';
   }
 }
